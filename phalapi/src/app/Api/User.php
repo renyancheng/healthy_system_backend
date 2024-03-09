@@ -314,8 +314,8 @@ class User extends Api
         }
     }
     /**
-     * 更新用户信息
-     * @desc 更新用户信息接口
+     * 更新用户资料
+     * @desc 更新用户资料接口
      * @method POST
      */
     public function updateProfile()
@@ -340,6 +340,11 @@ class User extends Api
         }
     }
 
+    /**
+     * 更新用户信息
+     * @desc 更新用户信息接口
+     * @method POST
+     */
     public function updateInfo()
     {
         $payload = $this->tokenDomain->getPayloadAndCheckLogin();
