@@ -115,10 +115,11 @@ class DietDiary extends Api
         $total = $this->model->count(array('user_id' => $payload['user_id']));
         $totalPage = ceil($total / $pageSize);
         $data = $this->model->getList($where, $params, '*', null, $page, $pageSize);
-        foreach ($data as $key => $value) {
+        // 获取列表没必要更新浏览量
+        /* foreach ($data as $key => $value) {
             // 更新浏览量
             $this->dietDiaryDomain->countViews($value['id']);
-        }
+        } */
         // $data['totalPage'] = $totalPage;
         return [
             'totalPage' => $totalPage,
