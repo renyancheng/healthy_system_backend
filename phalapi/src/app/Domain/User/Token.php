@@ -9,6 +9,10 @@ class Token
         $this->model = new \App\Model\User\Token();
     }
 
+    /**
+     * 获取jwt的payload并检查登录状态
+     * @return array
+     */
     function getPayloadAndCheckLogin()
     {
         $payload = \PhalApi\DI()->jwt->decodeJwt();
