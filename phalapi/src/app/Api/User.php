@@ -95,6 +95,11 @@ class User extends Api
                     'type' => 'float',
                     'desc' => '体重'
                 ),
+                'health_conditions' => array(
+                    'name' => 'health_conditions',
+                    'require' => true,
+                    'desc' => '健康状况'
+                ),
                 /* 'activity' => array(
                     'name' => 'activity',
                     'require' => true,
@@ -176,6 +181,11 @@ class User extends Api
                     'require' => true,
                     'type' => 'float',
                     'desc' => '体重'
+                ),
+                'health_conditions' => array(
+                    'name' => 'health_conditions',
+                    'require' => true,
+                    'desc' => '健康状况'
                 ),
             ),
             'getUserProfile' => array(
@@ -264,6 +274,7 @@ class User extends Api
             'gender' => $this->gender,
             'height' => $this->height,
             'weight' => $this->weight,
+            'health_conditions' => $this->health_conditions
         );
         $res_info = $this->infoModel->addInfo($user_info);
         if (empty($res_info)) {
@@ -352,7 +363,8 @@ class User extends Api
             'birth_date' => $this->birth_date,
             'gender' => $this->gender,
             'height' => $this->height,
-            'weight' => $this->weight
+            'weight' => $this->weight,
+            'health_conditions' => $this->health_conditions
         );
         $update_res = $this->infoModel->updateInfo($payload['user_id'], $data);
         if ($update_res) {
