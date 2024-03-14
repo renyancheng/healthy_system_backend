@@ -17,17 +17,17 @@ class Token
     {
         $payload = \PhalApi\DI()->jwt->decodeJwt();
         if (empty($payload['user_id'])) {
-            throw new \PhalApi\Exception\BadRequestException('无效token');
+            throw new \PhalApi\Exception\BadRequestException('无效token', 600);
         }
         $token = \PhalApi\DI()->jwt->encodeJwt($payload);
         $validation = $this->model->validate($token);
         if ($validation === false) {
-            throw new \PhalApi\Exception\BadRequestException('该token不存在');
+            throw new \PhalApi\Exception\BadRequestException('该token不存在', 600);
         }
         if ($validation['exp'] < time()) {
             // 删除该token
             $this->model->deleteToken($payload['id']);
-            throw new \PhalApi\Exception\BadRequestException('该token已过期');
+            throw new \PhalApi\Exception\BadRequestException('该token已过期', 600);
         }
         return $payload;
     }

@@ -55,7 +55,7 @@ class Article extends Api
         $content = $this->content;
         $row = $this->model->createArticle($userId, $title, $content);
         if (empty($row)) {
-            throw new \PhalApi\Exception\InternalServerErrorException('创建失败');
+            throw new \PhalApi\Exception\BadRequestException('创建失败');
         }
         return $row;
     }
@@ -113,7 +113,7 @@ class Article extends Api
         $content = $this->content;
         $res = $this->model->updateArticle($id, $title, $content);
         if (empty($res)) {
-            throw new \PhalApi\Exception\InternalServerErrorException('更新失败');
+            throw new \PhalApi\Exception\BadRequestException('更新失败');
         }
         return true;
     }

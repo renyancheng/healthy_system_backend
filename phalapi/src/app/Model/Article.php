@@ -29,6 +29,7 @@ class Article extends DataModel
     {
         return $this->getORM()
             ->select($this::EXCLUDE_CONTENT_FIELDS)
+            ->order("created_time DESC")
             ->page($page, $pageSize)
             ->fetchAll();
     }

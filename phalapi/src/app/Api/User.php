@@ -97,7 +97,7 @@ class User extends Api
                 ),
                 'health_conditions' => array(
                     'name' => 'health_conditions',
-                    'require' => true,
+                    // 'require' => true,
                     'desc' => '健康状况'
                 ),
                 /* 'activity' => array(
@@ -184,7 +184,6 @@ class User extends Api
                 ),
                 'health_conditions' => array(
                     'name' => 'health_conditions',
-                    'require' => true,
                     'desc' => '健康状况'
                 ),
             ),

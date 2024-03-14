@@ -114,7 +114,7 @@ class DietDiary extends Api
         $params = [$payload['user_id']];
         $total = $this->model->count(array('user_id' => $payload['user_id']));
         $totalPage = ceil($total / $pageSize);
-        $data = $this->model->getList($where, $params, '*', null, $page, $pageSize);
+        $data = $this->model->getList($where, $params, '*', "created_time DESC", $page, $pageSize);
         // 获取列表没必要更新浏览量
         /* foreach ($data as $key => $value) {
             // 更新浏览量
