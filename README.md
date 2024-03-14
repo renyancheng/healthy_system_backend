@@ -19,27 +19,35 @@ composer update
 ## 部署
 
 ### Nginx配置
-如果使用的是Nginx，可参考以下配置。  
-```nginx
+如果使用的是Nginx，可参考以下配置。 
+```nginx 
 server {
-    listen 80;
-    server_name dev.phalapi.net;
+    listen  80;
+    server_name  {ip/域名};
     # 将根目录设置到public目录
     root /path/to/phalapi/public;
     charset utf-8;
-
     location / {
-        index index.php;
+        add_header 'Access-Control-Allow-Origin' *;
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST';
+        add_header 'Access-Control-Allow-Headers' 'DNT,web-token,app-token,Authorization,Accept,Origin,Keep-Alive,User-Agent,X-Mx-ReqToken,X-Data-Type,X-Auth-Token,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range';
+        index index.php index.html error/index.html;
+        try_files $uri $uri/ $uri/index.php;
+    }
+    
+    if (!-e $request_filename) {
+        rewrite ^/(.*)$ /index.php last;
     }
 
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        # 根据当前环境，选择合适的通讯方式
-        # fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
-        fastcgi_pass 127.0.0.1:9000;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    location ~ \.php(.*)$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_split_path_info  ^((?U).+\.php)(/?.+)$;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  PATH_INFO  $fastcgi_path_info;
+        fastcgi_param  PATH_TRANSLATED  $document_root$fastcgi_path_info;
+        include        fastcgi_params;
     }
 }
 ```
@@ -48,6 +56,13 @@ server {
 > 温馨提示：推荐将访问根路径指向/path/to/phalapi/public。  
 
 ### 数据库配置
+
+#### 导入数据表
+
+将`./healthy_system.sql`文件导入到数据库即可
+
+#### 数据库连接
+
 如何使用的是MySQL数据库，参考修改```./config/dbs.php```数据库配置。  
 
 ```php
